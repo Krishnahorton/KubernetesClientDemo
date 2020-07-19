@@ -11,14 +11,14 @@ import (
 )
 
 func main() {
-	flag.String("apiserver","","api server uri string")
-	flag.String("Token","","valid token for service account")
+	apiServer := flag.String("apiserver","","api server uri string")
+	token := flag.String("Token","","valid token for service account")
 	flag.Parse()
-	config, err := clientcmd.BuildConfigFromFlags("https://192.168.99.106:8443", "")
+	config, err := clientcmd.BuildConfigFromFlags(*apiServer, "")
 	// TOKEN=$(kubectl get secrets \
 	//    -o jsonpath='{.items[?(@.type=="kubernetes.io/service-account-token")].data.token}' \
 	//    | base64 --decode)
-	config.BearerToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImRVUXI1c1J1ZXFsbHZvTXU4R0NnTllBb2VDcGVuNUoyZzVUS0xBTDYwLWMifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImRlZmF1bHQtdG9rZW4tNWNnYjgiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGVmYXVsdCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjgyMmVmNjU0LWNlNzktNGU1YS1iZWE1LTQyYjBhMmFiNTZmMyIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZWZhdWx0OmRlZmF1bHQifQ.psJfP9WdODkzIJ4uvSIGWhkq3bOcDtohgFULdtqZrpG3d5CCRg-nh5LWXkqwH70f8UQKmEk5xE5xwIkKKr5G5wqriuS4V9a_62gAE9Us6VKvR0qZx2P3Xc4xfsh2y9NwFaS0guwrrGSTg607EoweIjAIr1Ae2JNHv8bs8HmzupvrfkO3EGR107mv1USzrNLBGY2T5RY3krbhLQopgYwhEEyRrDoHhTyy_4rAE0kIagP65GbwxHlW7b8txxrxAvy8WDBJ5YAlAssZzPa3FBNk9RYGP1NnyDuQKsAabQt66FseahcWtXZ0LUgyMwyGM0WHZbjmlCFW_qyEtpe8LF7zfA"
+	config.BearerToken = *token
 	config.Insecure = true
 
 	if err != nil {
