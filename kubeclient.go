@@ -29,10 +29,12 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
+	// retrieving kubernetes namespace
 	namespaces,err := clientset.CoreV1().Namespaces().List(context.TODO(),metav1.ListOptions{})
 	if err != nil {
 		panic(err.Error())
 	}
+	fmt.Println("##### Printing namespaces and Pods ######")
 	for _,namespace := range namespaces.Items {
 		// list pods in each namespace
 		pods,_ := clientset.CoreV1().Pods(namespace.Name).List(context.TODO(),metav1.ListOptions{})
